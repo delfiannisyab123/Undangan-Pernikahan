@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Undangan Pernikahan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== Reset & fonts ===== */
+    :root{
+      --bg:#f6f6f8;
+      --card:#ffffff;
+      --accent:#b76e79;
+      --muted:#6b6b6b;
+      --glass: rgba(255,255,255,0.6);
+      --glass-2: rgba(255,255,255,0.85);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,#fff 0%,#f3f6ff 100%);color:#111}
+    a{color:inherit;text-decoration:none}
+    /* ===== Layout ===== */
+    @media (max-width: 600px){
+  .wrap{
+    align-items: flex-start;
+  }
+}
+@media (max-width:600px){
+  .overlay{
+    padding:14px;
+    border-radius:14px;
+    background-color: #cfcfcf;
+  }
+}
+
+    /* ===== Left (main) ===== */
+    .hero{
+      display:flex;flex-direction:column;gap:14px;justify-content:center;
+    }
+    .couple{
+      font-size:28px;
+      line-height:1.1;
+      color:#222;
+       font-family:'Great Vibes', cursive;
+  font-weight: 400;
+  font-style: normal;
+    }
+    .subtitle{font-size:14px;color:var(--muted)}
+    .invited{
+      margin-top:8px;
+      font-weight:600;
+      font-size:18px;
+      color:var(--accent);
+    }
+    .countdown{
+      margin-top:16px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .countdown .unit{
+      background:var(--card);
+      padding:12px 14px;
+      border-radius:12px;
+      min-width:84px;
+      text-align:center;
+      box-shadow: 0 6px 18px rgba(12,12,40,0.06);
+    }
+    .unit .num{font-size:20px;font-weight:700;}
+    .unit .lbl{font-size:12px;color:var(--muted);margin-top:6px}
+
+    /* ===== Right (card) ===== */
+    .card{
+      background: linear-gradient(180deg,var(--glass-2),var(--glass));
+      border-radius:12px;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      align-items:stretch;
+      justify-content:flex-start;
+    }
+    .card h3{margin:0;font-size:16px}
+    .when, .where{font-size:14px;color:#222}
+    .map{
+      height:180px;border-radius:10px;overflow:hidden;background:#e9eefb;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:14px;
+    }
+    .controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:6px}
+    .btn{
+      padding:10px 12px;border-radius:10px;border:0;background:var(--accent);color:white;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;
+      box-shadow: 0 8px 20px rgba(183,110,121,0.18);
+    }
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(150,100,110,0.12);box-shadow:none}
+    .small{padding:8px 10px;font-size:13px;border-radius:8px}
+
+    /* audio bar */
+    .audio-row{display:flex;gap:10px;align-items:center;justify-content:space-between}
+    .progress{flex:1;height:6px;background:#eee;border-radius:6px;overflow:hidden;margin:0 10px}
+    .progress > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,rgba(183,110,121,0.95),rgba(183,110,121,0.6))}
+
+    /* footer */
+    .note{font-size:12px;color:var(--muted);line-height:1.4}
+
+    /* small helpers */
+    .center{text-align:center}
+    .muted{color:var(--muted);font-size:13px}
+
+   .profil{
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  overflow: visible;
+  margin-top: 20px;
+}
+
+   .page{
+  display: none;
+  text-align: center;
+}
+
+.page.active{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.page .btn{
+  margin: 16px auto 0;
+}
+
+
+.photo{
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+
+.title{
+    font-size:26px;
+    font-weight:700;
+    margin-bottom:10px;
+     font-family:'Great Vibes', cursive;
+}
+.text{
+    font-size:16px;
+    color:#444;
+    max-width:320px;
+    margin-bottom: 10px !important;
+  font-family: 'Playfair Display', serif;
+   line-height: 1.5;
+}
+
+
+
+
+.btn{
+    background: #b76e79;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: 0.3s;
+    margin: 15px 0 0 0 !important; /* rapat, tanpa margin bawah */
+}
+.btn:hover{
+    background:#a45d67;
+}
+
+/* ================= DARK MODE ================= */
+body.dark {
+  background: #0f0f0f;
+  color: #eee;
+}
+
+body.dark .overlay{
+  background: rgba(30,30,30,0.9);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.6);
+}
+
+body.dark .card{
+  background: rgba(40,40,40,0.8);
+}
+
+body.dark .unit{
+  background:#222;
+  color:white;
+}
+
+body.dark .muted{
+  color:#cfcfcf !important;
+}
+
+body.dark .btn{
+  background:#b76e79;
+  color:white;
+}
+
+body.dark .btn.ghost{
+  background:transparent;
+  border:1px solid #555;
+  color:#ddd;
+}
+
+body.dark .map{
+  background:#222;
+  color:#ccc;
+}
+
+body.dark .photo{
+  box-shadow:0 10px 25px rgba(255,255,255,0.1);
+}
+
+.wrap {
+    background-image: url('jpeg/bgundangan.avif');
+    background-size: cover;        /* memenuhi kotak */
+    background-position: center;   /* posisi tengah */
+    background-repeat: no-repeat;  /* tidak mengulang */
+    min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:28px;
+  }
+
+/* Area Peta */
+.map-box{
+  width: 100%;
+  max-width: 350px;
+  height:400px;
+  background:white;
+  border-radius:15px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.15);
+  position:relative;
+  overflow:hidden;
+}
+
+/* Jalan Utama (Vertikal) */
+.road-vertical{
+  width:50px;
+  height:100%;
+  background:#d7d7d7;
+  position:absolute;
+  left:140px;
+}
+
+/* Jalan ke Lokasi (Horisontal) */
+.road-right{
+  height:45px;
+  width:60%;
+  background:#d7d7d7;
+  position:absolute;
+  top:50%;
+  left:140px;
+  transform:translateY(-50%);
+}
+
+/* Titik lokasi */
+.location{
+  width:26px;
+  height:26px;
+  background:#e63946;
+  border-radius:50%;
+  position:absolute;
+  top:50%;
+  right:40px;
+  transform:translateY(-50%);
+  border:3px solid white;
+  box-shadow:0 0 10px rgba(0,0,0,0.3);
+}
+
+.location-text{
+  position:absolute;
+  top:calc(50% + 35px);
+  right:20px;
+  font-size:15px;
+  font-weight:700;
+  color:#333;
+}
+
+/* Panah animasi */
+.arrow{
+  width:20px;
+  height:20px;
+  border-top:4px solid #0077ff;
+  border-right:4px solid #0077ff;
+  transform:rotate(45deg);
+  position:absolute;
+  opacity:0;
+}
+
+/* Animasi dari bawah ke atas (arah Kota → ke lokasi) */
+@keyframes from-bottom{
+  0%{ top:100%; left:158px; opacity:0; }
+  20%{ opacity:1; }
+  70%{ top:50%; left:158px; opacity:1; }
+  100%{ top:50%; left:158px; opacity:0; }
+}
+
+/* Animasi dari atas ke bawah (arah Pelabuhan Ratu → ke lokasi) */
+@keyframes from-top{
+  0%{ top:-20px; left:158px; opacity:0; }
+  20%{ opacity:1; }
+  70%{ top:50%; left:158px; opacity:1; }
+  100%{ top:50%; left:158px; opacity:0; }
+}
+
+/* Animasi belok kanan menuju lokasi */
+@keyframes to-location{
+  0%{ top:50%; left:158px; opacity:1; }
+  100%{ top:50%; left:240px; opacity:0; }
+}
+
+.arrow-bottom{
+  animation: from-bottom 3s infinite ease-in-out;
+}
+
+.arrow-top{
+  animation: from-top 3s infinite ease-in-out;
+}
+
+.arrow-right{
+  animation: to-location 2s infinite ease-in-out;
+  animation-delay:1.3s;
+}
+
+@media (max-width: 600px){
+
+  /* 1. overlay jadi 1 kolom */
+  .overlay{
+    grid-template-columns: 1fr;
+    padding:16px;
+  }
+
+  /* 2. rapikan hero */
+  .hero{
+    align-items: center;
+    text-align: center;
+  }
+
+  /* 3. countdown rata tengah */
+  .countdown{
+    justify-content: center;
+  }
+
+  /* 4. foto lebih proporsional */
+  .photo{
+    width:100%;
+    max-width:260px;
+  }
+
+  /* 5. teks jangan terlalu lebar */
+  .text{
+    max-width:280px;
+  }
+
+  /* 6. button full & rapi */
+  .btn{
+    width:100%;
+    justify-content:center;
+  }
+
+}
+
+.gallery{
+  margin-top:40px;
+  text-align:center;
+}
+
+.gallery-title{
+  font-family:'Great Vibes', cursive;
+  font-size:28px;
+  margin-bottom:15px;
+}
+
+.slider{
+  position:relative;
+  max-width:320px;
+  margin:auto;
+}
+
+.slides{
+  overflow:hidden;
+  border-radius:18px;
+}
+
+.slide{
+  width:100%;
+  display:none;
+  border-radius:18px;
+}
+
+.slide.active{
+  display:block;
+}
+
+.nav{
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%);
+  background:rgba(183,110,121,0.8);
+  border:none;
+  color:white;
+  font-size:20px;
+  padding:6px 12px;
+  border-radius:50%;
+  cursor:pointer;
+}
+
+.prev{ left:10px; }
+.next{ right:10px; }
+
+.doa{
+  margin:30px auto;
+  max-width:360px;
+  text-align:center;
+}
+
+.doa .arab{
+  font-size:22px;
+  line-height:1.8;
+  font-family:'Playfair Display', serif;
+}
+
+.doa .arti{
+  font-size:14px;
+  color:#666;
+  margin-top:10px;
+  font-style:italic;
+}
+
+
+  </style>
+</head>
+<body>
+  <button id="themeToggle" 
+  style="
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 9999;
+    padding: 8px 14px;
+    border-radius: 10px;
+    border: none;
+    background:#b76e79;
+    color:white;
+    font-weight:600;
+    cursor:pointer;">
+  🌙 Dark Mode
+</button>
+ <div class="wrap">
+    <div class="overlay" role="main" aria-labelledby="title">
+      <!-- LEFT -->
+      <section class="hero" aria-label="Detail acara">
+        <div>
+          <div class="subtitle">Dengan memohon rahmat dan ridho Allah SWT, kami mengundang</div>
+          <div class="invited" id="guestLine">Kepada: Tamu Terhormat</div>
+          <div class="couple" id="title">Taufik &amp; Cucu</div>
+          <div class="muted">Menikah pada</div>
+          <div class="when">Sabtu, 27 Desember 2025 · 09:00 WIB</div>
+        </div>
+
+        <div class="countdown" aria-live="polite" id="countdown">
+          <div class="unit"><div class="num" id="days">0</div><div class="lbl">Hari</div></div>
+          <div class="unit"><div class="num" id="hours">0</div><div class="lbl">Jam</div></div>
+          <div class="unit"><div class="num" id="minutes">0</div><div class="lbl">Menit</div></div>
+          <div class="unit"><div class="num" id="seconds">0</div><div class="lbl">Detik</div></div>
+        </div>
+
+     <div class="profil">
+       <!-- ========== PAGE 1: FOTO PASANGAN ========== -->
+<section id="page1" class="page active">
+    <img src="jpeg/fotoopik.jpeg" class="photo">
+    <div class="title">Taufik & Cucu</div>
+    <div class="text">
+  Dengan memohon rahmat Allah SWT, kami
+   melangsungkan akad & resepsi pernikahan
+</div>
+
+    <button class="btn" onclick="goTo('page2')" >Lihat Mempelai Pria</button>
+</section>
+
+<!-- ========== PAGE 2: MEMPELAI PRIA ========== -->
+<section id="page2" class="page">
+    <img src="jpeg/opik.jpeg" class="photo">
+    <div class="title">Mempelai Pria</div>
+    <div class="text">
+        Rohmat Taufik Putra dari Bapa Syarifuddin dan Ibu Dede
+    </div>
+    <button class="btn" onclick="goTo('page3')">Lihat Mempelai Wanita</button>
+</section>
+
+<!-- ========== PAGE 3: MEMPELAI WANITA ========== -->
+<section id="page3" class="page">
+    <img src="jpeg/cucu.jpeg" class="photo">
+    <div class="title">Mempelai Wanita</div>
+    <div class="text">
+        Cucu Fatmawati Putri dari Bapa Alm, Edin dan Ibu Anis
+    </div>
+    <button class="btn" onclick="goTo('page1')">Foto Pengantin</button>
+</section>
+     </div>
+</section>
+
+<div class="doa">
+  <div class="arab">
+    بَارَكَ اللهُ لَكُمَا وَبَارَكَ عَلَيْكُمَا وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ
+  </div>
+  <div class="arti">
+    Semoga Allah memberkahi pernikahan ini dan menyatukan kedua mempelai dalam kebaikan.
+  </div>
+</div>
+
+
+<section class="gallery">
+  <h3 class="gallery-title">Galeri Foto</h3>
+
+  <div class="slider">
+    <button class="nav prev" onclick="slide(-1)">❮</button>
+
+    <div class="slides">
+      <img src="jpeg/galery1.jpeg" class="slide active">
+      <img src="jpeg/galeri2.jpeg" class="slide">
+      <img src="jpeg/galei3.jpeg" class="slide">
+    </div>
+
+    <button class="nav next" onclick="slide(1)">❯</button>
+  </div>
+</section>
+
+
+  
+
+      <!-- RIGHT -->
+      <aside class="card" aria-label="Kontrol acara">
+        <h3>Lokasi</h3>
+        <div class="muted">Alamat:</div>
+        <div class="muted" id="placeAddress">Kertajaya, Kec. Simpenan, Kabupaten Sukabumi, Jawa Barat</div>
+
+        <!-- Map: clicking will open Google Maps -->
+        <div class="map" id="mapBox" role="link" tabindex="0" aria-label="Buka lokasi di Google Maps">
+          <div class="map-box">
+
+  <!-- Jalan -->
+  <div class="road-vertical"></div>
+  <div class="road-right"></div>
+
+  <!-- Panah animasi -->
+  <div class="arrow arrow-bottom"></div>  <!-- Dari Kota -->
+  <div class="arrow arrow-top"></div>     <!-- Dari Pelabuhan Ratu -->
+  <div class="arrow arrow-right"></div>   <!-- Belok kanan -->
+
+  <!-- Lokasi -->
+  <div class="location"></div>
+  <div class="location-text">Lokasi Pernikahan</div>
+
+</div>
+        
+        </div>
+
+        <h3>Musik Pernikahan</h3>
+        <div class="audio-row">
+          <button class="btn small" id="playPause">Play</button>
+          <div class="progress" aria-hidden="true"><i id="prog"></i></div>
+          <div class="muted small" id="timeLabel">00:00</div>
+        </div>
+        <audio id="bgAudio" loop preload="none">
+          <!-- Default sample music - ganti url dengan file .mp3 Anda -->
+          <source src="mp3/sunda.mp3" type="audio/mpeg">>
+        </audio>
+
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+          <!-- RSVP via WhatsApp - number should be replaced -->
+          <button class="btn" id="rsvpBtn" onclick="rsvpBtn()">Kehadiran VIA Gform</button>
+        </div>
+      </div>
+    </div>
+
+
+  <script>
+    function goTo(page){
+    document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+}
+    /* ========= Konfigurasi yang bisa diedit =========
+       - targetYear/Month/Day/Hour => tanggal acara
+       - placeLat/placeLng => koordinat Google Maps
+       - waNumber => nomor WhatsApp penerima RSVP (gunakan format international tanpa +, contoh: 6281234567890)
+       - music src => ubah src <audio> di atas bila perlu
+    ==================================================*/
+    const targetYear = 2025, targetMonth = 12, targetDay = 27, targetHour = 9, targetMin = 0;
+    const placeLat = -6.200000, placeLng = 106.816666;
+    const waNumber = "6281234567890"; // GANTI dengan nomor Anda (tanpa +)
+    const coupleNames = "Aden & Siti";
+
+    // ---------------- name detection (URL param ?to=Nama)
+    function getGuestFromURL(){
+      const params = new URLSearchParams(window.location.search);
+      const t = params.get('to') || params.get('nama') || params.get('name');
+      if(t) return decodeURIComponent(t);
+      return null;
+    }
+
+    function askGuestNameFallback(){
+      // only ask if not present
+      try{
+        const existing = localStorage.getItem('guestName_v1');
+        if(existing) return existing;
+      }catch(e){}
+      const p = prompt("Masukkan nama Anda untuk undangan (opsional):","");
+      if(p && p.trim()){
+        try{ localStorage.setItem('guestName_v1', p.trim()); }catch(e){}
+        return p.trim();
+      }
+      return null;
+    }
+
+    (function initGuest(){
+      let guest = getGuestFromURL();
+      if(!guest) guest = askGuestNameFallback();
+      const guestLine = document.getElementById('guestLine');
+      if(guest) guestLine.textContent = "Kepada: " + guest;
+      else guestLine.textContent = "Kepada: Tamu Terhormat";
+      // update share/RSVP templates after setting name
+      window.inviteGuestName = guest;
+    })();
+
+    // ---------------- countdown
+    function getTargetDate(){
+      // Months in JS Date are 0-indexed: month-1
+      return new Date(targetYear, targetMonth-1, targetDay, targetHour, targetMin, 0);
+    }
+
+    function updateCountdown(){
+      const now = new Date();
+      const t = getTargetDate();
+      const diff = t - now;
+      const daysEl = document.getElementById('days');
+      const hoursEl = document.getElementById('hours');
+      const minutesEl = document.getElementById('minutes');
+      const secondsEl = document.getElementById('seconds');
+
+      if(diff <= 0){
+        // event time reached or passed
+        daysEl.textContent = "0";
+        hoursEl.textContent = "0";
+        minutesEl.textContent = "0";
+        secondsEl.textContent = "0";
+        clearInterval(window._cdInterval);
+        document.querySelector('.when').textContent = "Hari Pernikahan — Selamat! 🎉";
+        return;
+      }
+
+      const s = Math.floor(diff/1000);
+      const days = Math.floor(s / (3600*24));
+      const hours = Math.floor((s % (3600*24)) / 3600);
+      const minutes = Math.floor((s % 3600) / 60);
+      const seconds = Math.floor(s % 60);
+
+      daysEl.textContent = days;
+      hoursEl.textContent = String(hours).padStart(2,'0');
+      minutesEl.textContent = String(minutes).padStart(2,'0');
+      secondsEl.textContent = String(seconds).padStart(2,'0');
+    }
+
+    // start countdown
+    updateCountdown();
+    window._cdInterval = setInterval(updateCountdown, 1000);
+
+    // ---------------- map link
+    const mapBox = document.getElementById('mapBox');
+    function buildMapsUrl(){
+      // standard Google Maps link with coordinates and place name
+      const q = encodeURIComponent(placeLat + ',' + placeLng);
+      return `https://maps.app.goo.gl/NgZsXWnMhsD7BmRz9`;
+    }
+    mapBox.addEventListener('click', ()=> window.open(buildMapsUrl(), '_blank'));
+    mapBox.addEventListener('keypress', (e)=> { if(e.key === 'Enter') window.open(buildMapsUrl(), '_blank'); });
+
+    // ---------------- audio controls
+    const audio = document.getElementById('bgAudio');
+    const playBtn = document.getElementById('playPause');
+    const prog = document.getElementById('prog');
+    const timeLabel = document.getElementById('timeLabel');
+
+    // update progress bar
+    audio.addEventListener('timeupdate', ()=>{
+      if(audio.duration && !isNaN(audio.duration)){
+        const pct = (audio.currentTime / audio.duration) * 100;
+        prog.style.width = pct + "%";
+        // label mm:ss
+        const mm = Math.floor(audio.currentTime / 60);
+        const ss = Math.floor(audio.currentTime % 60);
+        timeLabel.textContent = String(mm).padStart(2,'0') + ":" + String(ss).padStart(2,'0');
+      }
+    });
+
+    playBtn.addEventListener('click', async ()=>{
+      if(audio.paused){
+        try{
+          await audio.play();
+          playBtn.textContent = "Pause";
+        }catch(e){
+          // autoplay blocked - inform user and try to play muted then unmute on click
+          alert("Autoplay diblokir oleh browser. Tekan Play lagi untuk memulai musik.");
+          try{ await audio.play(); playBtn.textContent = "Pause"; }catch(e){}
+        }
+      } else {
+        audio.pause();
+        playBtn.textContent = "Play";
+      }
+    });
+
+    // try one-shot autoplay (may be blocked)
+    window.addEventListener('load', ()=>{
+      // attempt autoplay but ignore errors
+      audio.play().then(()=>{ playBtn.textContent = "Pause"; }).catch(()=>{ /* ignore */ });
+    });
+
+   // ---------------- RSVP WA
+    function rsvpBtn() {
+
+   const nama = "Tamu Undangan";     // bisa diisi otomatis
+  const coupleNames = "A & B";      // isi sesuai undangan
+  const targetDay = "20";           // tanggal acara
+  const targetYear = "2025";
+  const attend = "Hadir";           // atau "Tidak hadir"
+
+  const pesan = `Assalamu'alaikum. Saya ${nama} ingin mengonfirmasi kehadiran pada acara pernikahan ${coupleNames} tanggal ${targetDay} Des ${targetYear}. Keterangan: ${attend}`;
+
+  const url = "https://docs.google.com/forms/d/e/1FAIpQLScMM_1YXaOZbBMA5GAGNSi5Qv6HiEH1-kSqXFiCvR5V6DxUeA/viewform?usp=pp_url&entry.600094555=" + encodeURIComponent(pesan);
+
+  window.location.href = url;
+}
+
+    // Optional: update document title with countdown days
+    function updateTitleCompact(){
+      const days = document.getElementById('days').textContent;
+      document.title = `${days} hari lagi • Undangan ${coupleNames}`;
+    }
+    setInterval(updateTitleCompact, 3000);
+
+    // Accessibility: announce when countdown ends
+    const targetTime = getTargetDate().getTime();
+    const ann = new Audio(); // silent placeholder just to precreate audio
+    setInterval(()=>{
+      if(Date.now() >= targetTime){
+        try{  
+          const el = document.createElement('div');
+          el.setAttribute('aria-live','polite');
+          el.style.position='absolute';el.style.left='-9999px';
+          el.textContent = 'Hari pernikahan telah tiba. Selamat!';
+          document.body.appendChild(el);
+          clearInterval(this);
+        }catch(e){}
+      }
+    }, 1000);
+            // countdown selesai – hentikan interval & beri alert (sekali)
+        alert("Hari pernikahan telah tiba! Barakallahu laka wa baraka ‘alaika.");
+        clearInterval(this);
+
+        /* ================= THEME TOGGLE ================= */
+const themeToggle = document.getElementById("themeToggle");
+
+// Load saved theme
+if(localStorage.getItem("theme") === "dark"){
+    document.body.classList.add("dark");
+    themeToggle.textContent = "☀️ Light Mode";
+}
+
+// Toggle theme
+themeToggle.addEventListener("click", ()=>{
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("theme","dark");
+        themeToggle.textContent = "☀️ Light Mode";
+    } else {
+        localStorage.setItem("theme","light");
+        themeToggle.textContent = "🌙 Dark Mode";
+    }
+});
+
+/* =========================
+   Kontrol animasi panah dengan JS
+   Tempelkan ini di bagian Anda
+   ========================= */
+
+(function(){
+  // referensi elemen panah (harus sesuai kelas di CSS)
+  const arrowBottom = document.querySelector('.arrow-bottom');
+  const arrowTop    = document.querySelector('.arrow-top');
+  const arrowRight  = document.querySelector('.arrow-right');
+
+  if(!arrowBottom || !arrowTop || !arrowRight) return; // safety
+
+  // helper: jalankan animasi keyframe pada elemen via style.animation
+  function playAnim(el, name, duration = '1.2s', easing = 'ease-in-out', fill = 'forwards') {
+    // reset animation lalu jalankan ulang
+    el.style.animation = 'none';
+    // force reflow untuk memastikan animasi restart
+    // eslint-disable-next-line
+    void el.offsetWidth;
+    el.style.animation = `${name} ${duration} ${easing} 0s 1 ${fill}`;
+  }
+
+  // sequence tunggal: dari bawah -> belok -> dari atas -> belok
+  function runSequence() {
+    // 1) Dari bawah (masuk vertical ke titik belok)
+    playAnim(arrowBottom, 'from-bottom', '2.4s');
+
+
+    setTimeout(() => {
+      playAnim(arrowRight, 'to-location', '1.0s');
+    }, 1400);
+
+    // 3) Sedikit jeda lalu panah dari atas
+    setTimeout(() => {
+      playAnim(arrowTop, 'from-top', '2.4s');
+    }, 2600);
+
+    // 4) Saat panah dari atas mendekat, jalankan belok kanan lagi
+    setTimeout(() => {
+      playAnim(arrowRight, 'to-location', '1.0s');
+    }, 4000);
+  }
+
+  // jalankan pertama kali segera
+  runSequence();
+
+  // ulangi setiap 6.2s (sesuaikan jika Anda rubah durasi animasi)
+  const loopInterval = 6200;
+  const intervalId = setInterval(runSequence, loopInterval);
+
+  // (opsional) pause animasi saat user hover map
+  const mapBox = document.querySelector('.map-box') || document.querySelector('.map') || document.body;
+  if(mapBox){
+    mapBox.addEventListener('mouseenter', ()=> clearInterval(intervalId));
+    mapBox.addEventListener('mouseleave', ()=> {
+      // restart sequence after hover out
+      runSequence();
+      setInterval(runSequence, loopInterval);
+    });
+  }
+
+})();
+
+let index = 0;
+const slides = document.querySelectorAll(".slide");
+
+function showSlide(i){
+  slides.forEach(s => s.classList.remove("active"));
+  slides[i].classList.add("active");
+}
+
+function slide(step){
+  index += step;
+  if(index < 0) index = slides.length - 1;
+  if(index >= slides.length) index = 0;
+  showSlide(index);
+}
+
+// auto slide (opsional)
+setInterval(()=> slide(1), 4000);
+
+  </script>
+</body>
+</html>
+
+
+

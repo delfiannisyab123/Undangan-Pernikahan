@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Undangan Pernikahan - Putra & Putri</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#f7e9e8;
+      --card:#fff6f6;
+      --accent:#a35b54;
+      --muted:#7b5a55;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,Arial}
+
+    body{
+      background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.8), transparent 10%), var(--bg);
+      display:flex;align-items:center;justify-content:center;padding:40px;
+    }
+
+    .invite{
+      width:820px; /* change to 100% and max-width if you want responsive */
+      max-width:92vw;
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.85));
+      border-radius:18px;
+      padding:48px 56px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.08);
+      position:relative;
+      overflow:hidden;
+    }
+
+    /* soft floral corners (pure CSS decoration) */
+    .invite::before, .invite::after{
+      content:'';position:absolute;width:300px;height:300px;opacity:0.35;pointer-events:none;
+      background-repeat:no-repeat;background-size:contain;filter:blur(1px);
+    }
+    .invite::before{background-image:radial-gradient(circle at 20% 20%, #f2e9e7 12%, transparent 13%), linear-gradient(135deg,#fde8e6,#f5dedd);top:-40px;left:-80px;transform:rotate(-6deg)}
+    .invite::after{background-image:radial-gradient(circle at 80% 80%, #f2e9e7 12%, transparent 13%), linear-gradient(225deg,#fde8e6,#f5dedd);bottom:-60px;right:-60px;transform:rotate(8deg)}
+
+    header{ text-align:center;margin-bottom:36px }
+    .eyebrow{ font-family:Playfair Display, serif; font-weight:700; letter-spacing:2px; font-size:44px; color:var(--accent); margin:0}
+    .date{ font-size:14px; color:var(--muted); margin-top:8px; letter-spacing:1.6px }
+
+    .frame{
+      margin:24px auto 0; width:420px; max-width:86%;
+      border:3px solid rgba(163,91,84,0.25); border-radius:10px 10px 6px 6px; padding:36px 28px 40px; position:relative;
+      background:linear-gradient(180deg, rgba(255,255,255,0.65), rgba(255,255,255,0.55));
+    }
+
+    /* create arch on top with pseudo element */
+    .frame::before{
+      content:''; position:absolute; left:50%; transform:translateX(-50%); top:-100px; width:320px; height:160px; border-top:6px solid rgba(163,91,84,0.45); border-left:0; border-right:0; border-radius:160px 160px 0 0; 
+      background:transparent; border-bottom:none; box-sizing:border-box;
+    }
+
+    /* small decorative flowers along arch */
+    .frame .flower{ position:absolute; top:-18px; width:18px; height:18px; border-radius:50%; background:rgba(247,230,228,0.9); box-shadow:0 2px 0 rgba(0,0,0,0.04)}
+    .flower.f1{ left:calc(50% - 140px) }
+    .flower.f2{ left:calc(50% - 30px) }
+    .flower.f3{ left:calc(50% + 85px) }
+
+    .names{ text-align:center; padding-top:14px }
+    .names .first, .names .second{ font-family:'Great Vibes', cursive; font-size:48px; color:var(--accent); margin:6px 0 }
+    .names .amp{ font-family:Playfair Display, serif; font-size:28px; color:var(--muted); margin:8px 0 }
+
+    .footer-note{ text-align:center; color:var(--muted); font-size:13px; margin-top:18px }
+
+    /* responsive tweaks */
+    @media (max-width:480px){
+      .eyebrow{font-size:32px}
+      .names .first, .names .second{ font-size:36px }
+      .frame::before{ width:260px; height:120px; top:-80px }
+    }
+  .btn-order{
+      display:inline-block;
+      padding:12px 28px;
+      background:var(--accent);
+      color:white;
+      font-size:15px;
+      border-radius:8px;
+      text-decoration:none;
+      letter-spacing:1px;
+      transition:0.25s;
+    }
+    .btn-order:hover{
+      opacity:0.85;
+      transform:translateY(-2px);
+    }
+
+  </style>
+</head>
+<body>
+  <article class="invite" role="article">
+    <header>
+      <h1 class="eyebrow">THE WEDDING</h1>
+      <div class="date">SABTU, 27 DESEMBER 2025</div>
+    </header>
+
+    <section class="frame" aria-label="frame undangan">
+      <!-- decorative tiny flowers -->
+      <span class="flower f1" aria-hidden="true"></span>
+      <span class="flower f2" aria-hidden="true"></span>
+      <span class="flower f3" aria-hidden="true"></span>
+
+      <div class="names">
+        <div class="first">Taufik</div>
+        <div class="amp">&amp;</div>
+        <div class="second">Cucu</div>
+      </div>
+
+      <p class="footer-note">Keluarga Besar &bull; Undangan Resmi</p>
+        <div style="text-align:center; margin-top:28px;">
+        <a href="Hal1.html" class="btn-order">NEXT</a>
+    </div>
+
+    </section>
+
+  </article>
+</body>
+</html>
